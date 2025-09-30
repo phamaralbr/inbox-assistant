@@ -7,15 +7,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       /* Background blobs */
-      /* Background blobs */
       .blob {
-        position: fixed; /* stays relative to viewport */
+        position: fixed;
         border-radius: 50%;
         filter: blur(180px);
         opacity: 0.1;
         animation: moveBlob 60s ease-in-out infinite alternate;
-        pointer-events: none; /* ignore mouse events */
-        z-index: 0; /* behind everything */
+        pointer-events: none;
+        z-index: 0;
       }
 
       /* Different speeds and delays for variety */
@@ -25,8 +24,6 @@
       .blob:nth-child(2) {
         animation-duration: 80s;
       }
-      /* .blob:nth-child(3) { animation-duration: 65s; }
-  .blob:nth-child(4) { animation-duration: 75s; } */
 
       @keyframes moveBlob {
         0% {
@@ -54,7 +51,7 @@
     </style>
   </head>
   <body class="relative min-h-screen max-h-screen flex flex-col bg-gray-950">
-    <!-- Blobs -->
+    <!-- Background blobs -->
     <div
       class="blob w-[75vw] h-[75vh] bg-purple-900"
       style="top: -10vh; left: -5vw"
@@ -63,9 +60,6 @@
       class="blob w-[80vw] h-[80vh] bg-blue-900"
       style="bottom: -15vh; right: -10vw"
     ></div>
-
-    <!-- <div class="blob w-[700px] h-[700px] bg-pink-800 top-[100px] right-[-250px]"></div>
-<div class="blob w-[800px] h-[800px] bg-indigo-900 bottom-[50px] left-[-200px]"></div> -->
 
     <!-- Header -->
     <header class="p-6 z-10 max-w-3xl mx-auto w-full">
