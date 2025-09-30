@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inbox Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Background blobs */
+      /* Background blobs */
+      .blob {
+        position: fixed; /* stays relative to viewport */
+        border-radius: 50%;
+        filter: blur(180px);
+        opacity: 0.1;
+        animation: moveBlob 60s ease-in-out infinite alternate;
+        pointer-events: none; /* ignore mouse events */
+        z-index: 0; /* behind everything */
+      }
+
+      /* Different speeds and delays for variety */
+      .blob:nth-child(1) {
+        animation-duration: 70s;
+      }
+      .blob:nth-child(2) {
+        animation-duration: 80s;
+      }
+      /* .blob:nth-child(3) { animation-duration: 65s; }
+  .blob:nth-child(4) { animation-duration: 75s; } */
+
+      @keyframes moveBlob {
+        0% {
+          transform: translate(0vw, 0vh) scale(1);
+        }
+        25% {
+          transform: translate(15vw, -10vh) scale(1.1);
+        }
+        50% {
+          transform: translate(-20vw, 15vh) scale(1.2);
+        }
+        75% {
+          transform: translate(10vw, 20vh) scale(1.1);
+        }
+        100% {
+          transform: translate(-15vw, -15vh) scale(1);
+        }
+      }
+
+      /* Scrollable textarea after limit */
+      textarea {
+        max-height: 30vh; /* limit before scrollbar */
+        overflow-y: auto;
+      }
+    </style>
+  </head>
+  <body class="relative min-h-screen max-h-screen flex flex-col bg-gray-950">
+    <!-- Blobs -->
+    <div
+      class="blob w-[75vw] h-[75vh] bg-purple-900"
+      style="top: -10vh; left: -5vw"
+    ></div>
+    <div
+      class="blob w-[80vw] h-[80vh] bg-blue-900"
+      style="bottom: -15vh; right: -10vw"
+    ></div>
+
+    <!-- <div class="blob w-[700px] h-[700px] bg-pink-800 top-[100px] right-[-250px]"></div>
+<div class="blob w-[800px] h-[800px] bg-indigo-900 bottom-[50px] left-[-200px]"></div> -->
+
+    <!-- Header -->
+    <header class="p-6 z-10 max-w-3xl mx-auto w-full">
+      <h1 class="text-3xl font-bold text-white text-center">Inbox Assistant</h1>
+    </header>
+
+    <main
+      id="resultContainer"
+      class="flex-1 min-h-0 p-6 overflow-y-scroll space-y-4 z-10 max-w-3xl mx-auto w-full"
+    >
+      <!-- Messages will appear here -->
+    </main>
+
+    <!-- Message above input bar -->
+    <div
+      id="infoMessage"
+      class="text-center text-gray-400 mb-2 z-10 max-w-3xl mx-auto w-full px-4"
+    >
+      O Inbox Assistant analisa seus e-mails e identifica se são
+      <strong>Produtivos</strong> ou <strong>Improdutivos</strong>, sugerindo
+      respostas automáticas.
+      <div class="mt-3">
+        Insira seu e-mail abaixo ou anexe um arquivo <strong>.txt</strong> ou
+        <strong>.pdf</strong> para verificação.
+      </div>
+    </div>
+
+    <!-- Input bar -->
+    <form
+      id="emailForm"
+      action="javascript:void(0)"
+      class="p-6 z-10 max-w-3xl mx-auto w-full"
+    >
+      <div
+        class="flex items-center bg-gray-900 rounded-[28px] px-4 py-2 w-full"
+      >
+        <div class="flex-1 flex items-center space-x-2 min-w-0">
+          <!-- Textarea (hidden when file attached) -->
+          <textarea
+            id="text"
+            name="text"
+            rows="1"
+            placeholder="Cole seu e-mail aqui..."
+            autocomplete="off"
+            class="w-full bg-transparent text-white px-3 py-2 focus:outline-none resize-none align-bottom"
+          ></textarea>
+
+          <!-- File pill -->
+          <div
+            id="filePill"
+            class="hidden flex items-center bg-gray-700 text-white rounded-full px-3 py-1 max-w-full"
+          >
+            <span id="fileName" class="truncate max-w-full"></span>
+            <button
+              type="button"
+              id="removeFile"
+              class="ml-2 text-gray-300 hover:text-white"
+            >
+              &times;
+            </button>
+          </div>
+        </div>
+
+        <!-- Attachment -->
+        <label class="cursor-pointer px-2 py-2 flex items-center">
+          <input
+            type="file"
+            id="file"
+            name="file"
+            accept=".txt,.pdf"
+            class="hidden"
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 text-gray-400 hover:text-indigo-400 transition-colors"
+            viewBox="0 -960 960 960"
+            fill="currentColor"
+          >
+            <path
+              d="M720-330q0 104-73 177T470-80q-104 0-177-73t-73-177v-370q0-75 52.5-127.5T400-880q75 0 127.5 52.5T580-700v350q0 46-32 78t-78 32q-46 0-78-32t-32-78v-370h80v370q0 13 8.5 21.5T470-320q13 0 21.5-8.5T500-350v-350q-1-42-29.5-71T400-800q-42 0-71 29t-29 71v370q-1 71 49 120.5T470-160q70 0 119-49.5T640-330v-390h80v390Z"
+            />
+          </svg>
+        </label>
+
+        <!-- Send button -->
+        <button
+          type="submit"
+          class="ml-2 bg-indigo-600 hover:bg-indigo-700 transition-colors text-white font-semibold px-4 py-2 rounded-full"
+        >
+          Enviar
+        </button>
+      </div>
+    </form>
+
+    <script>
+      const fileInput = document.getElementById("file");
+      const filePill = document.getElementById("filePill");
+      const fileNameSpan = document.getElementById("fileName");
+      const removeFileBtn = document.getElementById("removeFile");
+      const textarea = document.getElementById("text");
+      const form = document.getElementById("emailForm");
+      const resultContainer = document.getElementById("resultContainer");
+      const infoMessage = document.getElementById("infoMessage");
+
+      // Auto-grow textarea
+      textarea.addEventListener("input", () => {
+        textarea.style.height = "auto";
+        textarea.style.height = textarea.scrollHeight + "px";
+      });
+
+      // Enter submits, Shift+Enter new line
+      textarea.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          form.requestSubmit();
+        }
+      });
+
+      // Show file pill when a file is selected
+      fileInput.addEventListener("change", () => {
+        if (fileInput.files.length > 0) {
+          const file = fileInput.files[0];
+          fileNameSpan.textContent = file.name;
+          filePill.classList.remove("hidden");
+          textarea.classList.add("hidden");
+        }
+      });
+
+      // Remove file pill
+      removeFileBtn.addEventListener("click", () => {
+        fileInput.value = "";
+        filePill.classList.add("hidden");
+        textarea.classList.remove("hidden");
+      });
+
+      // Function to add chat messages
+      function addMessage(content, type = "user") {
+        const div = document.createElement("div");
+
+        content = content.replace(/\n/g, "<br>");
+
+        if (type === "user") {
+          // Bubble aligned to right, text stays left
+          div.className = "flex justify-end";
+          div.innerHTML = `
+      <div class="inline-block bg-gray-700/50 text-white px-4 py-2 rounded-2xl max-w-[80%] text-left">
+        ${content}
+      </div>`;
+        } else {
+          // Bubble aligned left (default)
+          div.className = "flex justify-start";
+          div.innerHTML = `
+      <div class="inline-block bg-gray-900 text-white px-4 py-2 rounded-2xl max-w-[80%] text-left">
+        ${content}
+      </div>`;
+        }
+
+        resultContainer.appendChild(div);
+        resultContainer.scrollTop = resultContainer.scrollHeight;
+      }
+
+      // Handle form submission
+      form.addEventListener("submit", async (e) => {
+        console.log("1");
+        e.preventDefault();
+
+        // Read values before clearing
+        const textValue = textarea.value.trim();
+        const file = fileInput.files[0];
+
+        // If no text and no file, do nothing
+        if (!textValue && !file) return;
+
+        // Hide info message
+        if (infoMessage) infoMessage.style.display = "none";
+
+        // CLEAR INPUTS
+        textarea.value = "";
+        textarea.style.height = "auto"; // reset height
+        fileInput.value = "";
+        filePill.classList.add("hidden");
+        textarea.classList.remove("hidden");
+
+        if (textValue) addMessage(textValue, "user");
+        if (file) addMessage(file.name, "user");
+
+        addMessage("Processando...", "bot");
+
+        console.log("Enviando para o backend...", { textValue, file });
+
+        try {
+          const formData = new FormData();
+          if (textValue) formData.append("text", textValue);
+          if (file) formData.append("file", file);
+
+          const response = await fetch("http://127.0.0.1:8000/classify", {
+            method: "POST",
+            body: formData,
+          });
+          const data = await response.json();
+
+          // Remove "Processando..."
+          resultContainer.lastChild.remove();
+
+          let content = `<strong>Categoria:</strong> <span class="${
+            data.category === "Produtivo" ? "text-green-400" : "text-red-400"
+          }">${data.category}</span><br><br>`;
+          content += `<strong>Resposta sugerida:</strong><br><br> ${data.suggested_response}`;
+
+          addMessage(content, "bot");
+        } catch (err) {
+          console.error(err);
+          resultContainer.lastChild.remove();
+          addMessage("Erro ao conectar com o servidor.", "bot");
+        }
+      });
+    </script>
+  </body>
+</html>
