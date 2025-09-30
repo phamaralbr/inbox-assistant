@@ -54,6 +54,8 @@ A proposta é reduzir tempo gasto com mensagens irrelevantes, ajudando o usuári
 
    ```bash
    pip install -r requirements.txt
+   python -m spacy download pt_core_news_sm
+
 
    ```
 
@@ -65,7 +67,7 @@ A proposta é reduzir tempo gasto com mensagens irrelevantes, ajudando o usuári
 
 5. Execute o servidor:
    ```bash
-   uvicorn main:app --reload
+   uvicorn app.main:app --reload
    ```
 
 O backend estará disponível em http://127.0.0.1:8000.

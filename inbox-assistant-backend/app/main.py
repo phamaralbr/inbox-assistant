@@ -22,13 +22,12 @@ client = genai.Client()  # uses GEMINI_API_KEY env
 app = FastAPI(title="Inbox Assistant Backend")
 
 origins = [
-    "http://localhost:5500",
-    "http://127.0.0.1:5500",
+    "https://phamaralbr.github.io",
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # or ["http://127.0.0.1:5500"]
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
