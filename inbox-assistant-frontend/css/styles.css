@@ -1,0 +1,42 @@
+/* Background blobs */
+.blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(180px);
+  opacity: 0.1;
+  animation: moveBlob 60s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Different speeds and delays for variety */
+.blob:nth-child(1) {
+  animation-duration: 70s;
+}
+.blob:nth-child(2) {
+  animation-duration: 80s;
+}
+
+@keyframes moveBlob {
+  0% {
+    transform: translate(0vw, 0vh) scale(1);
+  }
+  25% {
+    transform: translate(15vw, -10vh) scale(1.1);
+  }
+  50% {
+    transform: translate(-20vw, 15vh) scale(1.2);
+  }
+  75% {
+    transform: translate(10vw, 20vh) scale(1.1);
+  }
+  100% {
+    transform: translate(-15vw, -15vh) scale(1);
+  }
+}
+
+/* Scrollable textarea after limit */
+textarea {
+  max-height: 30vh; /* limit before scrollbar */
+  overflow-y: auto;
+}

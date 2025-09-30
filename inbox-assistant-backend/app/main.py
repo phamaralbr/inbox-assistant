@@ -56,7 +56,8 @@ def classify_with_gemini(email_text: str):
         - Com base na classificação e no conteúdo do email:
             - Se for **Produtivo**: sugira uma resposta em formato de email profissional, em português, mantendo objetividade e cordialidade.
             - Se for **Improdutivo**: sugira uma resposta curta e educada, reconhecendo a mensagem, mas sem comprometer ações desnecessárias.
-        - Use `<br>` para marcar quebras de linha no texto da resposta.
+        - Use <br><br> para separar parágrafos (como em emails).
+        - Use <br> para quebras de linha dentro de um parágrafo, se necessário.
         - Adapte o tom ao contexto corporativo.
         
         Email:  {email_text}
