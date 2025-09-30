@@ -5,6 +5,11 @@ A proposta é reduzir tempo gasto com mensagens irrelevantes, ajudando o usuári
 
 ---
 
+![Alt text](images/Screenshot_1.png)
+![Alt text](images/Screenshot_2.png)
+
+> Observação: Como o projeto depende das APIs do Google, verifique se estão operacionais antes de usar: [Google AI Studio Status](https://aistudio.google.com/status)
+
 ## Como funciona
 
 - O backend é desenvolvido em **FastAPI (Python)**.
@@ -52,7 +57,13 @@ A proposta é reduzir tempo gasto com mensagens irrelevantes, ajudando o usuári
 
    ```
 
-4. Execute o servidor:
+4. Crie o arquivo `.env` em `inbox-assistant-backend/app` com sua key para a Google API
+
+   ```
+   GEMINI_API_KEY=api_key_here
+   ```
+
+5. Execute o servidor:
    ```bash
    uvicorn main:app --reload
    ```
