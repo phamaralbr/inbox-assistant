@@ -13,8 +13,8 @@ A proposta é reduzir tempo gasto com mensagens irrelevantes, ajudando o usuári
 ## Como funciona
 
 - O backend é desenvolvido em **FastAPI (Python)**.
-- O texto dos e-mails é processado com **técnicas de NLP (Processamento de Linguagem Natural)**.
-- A classificação e a sugestão de resposta fazem uso da **IA do Google**, consumida via API.
+- O texto dos e-mails é pré-processado com **técnicas de NLP (Processamento de Linguagem Natural)** via spaCy (python).
+- A classificação e a sugestão de resposta fazem uso da **IA Gemini do Google**, consumida via API.
 - O frontend é feito em **HTML, TailwindCSS e JavaScript**, com interface simples e responsiva.
 
 ---
@@ -37,7 +37,7 @@ A proposta é reduzir tempo gasto com mensagens irrelevantes, ajudando o usuári
 
    ```bash
    git clone https://github.com/seu-usuario/inbox-assistant.git
-   cd inbox-assistant/backend
+   cd inbox-assistant-backend
 
    ```
 
