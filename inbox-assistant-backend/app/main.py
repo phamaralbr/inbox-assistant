@@ -23,6 +23,8 @@ app = FastAPI(title="Inbox Assistant Backend")
 
 origins = [
     "https://phamaralbr.github.io",
+    "http://127.0.0.1:5500",
+    "http://localhost:5500",
 ]
 
 app.add_middleware(
