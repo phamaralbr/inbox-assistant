@@ -223,7 +223,6 @@
 
       // Handle form submission
       form.addEventListener("submit", async (e) => {
-        console.log("1");
         e.preventDefault();
 
         // Read values before clearing
@@ -247,8 +246,6 @@
         if (file) addMessage(file.name, "user");
 
         addMessage("Processando...", "bot");
-
-        console.log("Enviando para o backend...", { textValue, file });
 
         try {
           const formData = new FormData();

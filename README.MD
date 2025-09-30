@@ -59,10 +59,11 @@ A proposta é reduzir tempo gasto com mensagens irrelevantes, ajudando o usuári
 
    ```
 
-4. Crie o arquivo `.env` em `inbox-assistant-backend/app` com sua key para a Google API
+4. Crie o arquivo `.env` em `inbox-assistant-backend/app` com sua key para a Google API e definição do ambiente:
 
    ```
    GEMINI_API_KEY=api_key_here
+   ENV=development
    ```
 
 5. Execute o servidor:
