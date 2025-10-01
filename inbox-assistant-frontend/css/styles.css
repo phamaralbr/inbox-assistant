@@ -40,3 +40,32 @@ textarea {
     max-height: 30vh; /* limit before scrollbar */
     overflow-y: auto;
 }
+
+/* Apply custom scrollbar styles */
+body {
+    scrollbar-color: transparent transparent;
+    scrollbar-width: thin;
+}
+
+.styled-scrollbars:hover {
+    scrollbar-color: #666 transparent;
+}
+
+/* Scrollbar track */
+::-webkit-scrollbar-track {
+    background: #333; /* Track color */
+}
+
+/* Scrollbar thumb */
+::-webkit-scrollbar-thumb {
+    background: #666; /* Thumb color */
+}
+
+/* Scrollbar thumb states */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Hover thumb color */
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: #444; /* Active thumb color */
+}
