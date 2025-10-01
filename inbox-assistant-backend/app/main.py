@@ -12,9 +12,6 @@ from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 
 
-
-
-
 load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 client = genai.Client()  # uses GEMINI_API_KEY env
@@ -42,25 +39,26 @@ class EmailClassification(BaseModel):
 
 def classify_with_gemini(email_text: str):
     prompt = f"""
-        Você é um assistente especializado em análise e resposta de emails corporativos para uma grande empresa do setor financeiro, que recebe diariamente um alto volume de mensagens. 
-        Seu objetivo é automatizar a triagem e a resposta inicial, liberando a equipe de tarefas repetitivas.
+        Você é um assistente especializado em análise e resposta de emails profissionais.
+        Seu objetivo é ajudar um(a) profissional ocupado(a) a organizar sua caixa de entrada
+        e responder de forma rápida e adequada, como se fosse a própria pessoa escrevendo.
 
         Tarefas:
 
         1. **Classificação do Email**
         - Classifique o email recebido como:
-            - **Produtivo**: requer uma ação ou resposta específica, como solicitações de suporte, dúvidas sobre o sistema, pedidos de atualização de status, envio de documentos ou requisições em aberto.
-            - **Improdutivo**: não requer ação imediata ou resposta relevante, como mensagens de felicitações (ex.: Feliz Natal, parabéns), agradecimentos genéricos, conversas informais, ou mensagens sem relação direta com atividades da empresa.
+            - **Produtivo**: requer uma ação ou resposta específica, como solicitações de informações, dúvidas sobre um projeto, pedidos de atualização de status, envio de documentos ou compromissos a confirmar.
+            - **Improdutivo**: não requer ação imediata ou resposta relevante, como mensagens de felicitações (ex.: Feliz Natal, parabéns), agradecimentos genéricos, conversas informais, ou mensagens sem relação direta com as atividades da pessoa.
 
         2. **Resposta Sugerida**
         - Com base na classificação e no conteúdo do email:
-            - Se for **Produtivo**: sugira uma resposta em formato de email profissional, em português, mantendo objetividade e cordialidade.
+            - Se for **Produtivo**: sugira uma resposta em formato de email profissional, em português, mantendo objetividade e cordialidade, como se fosse escrita pela própria pessoa.
             - Se for **Improdutivo**: sugira uma resposta curta e educada, reconhecendo a mensagem, mas sem comprometer ações desnecessárias.
         - Use <br><br> para separar parágrafos (como em emails).
         - Use <br> para quebras de linha dentro de um parágrafo, se necessário.
-        - Adapte o tom ao contexto corporativo.
-        
-        Email:  {email_text}
+        - Adapte o tom ao contexto profissional individual.
+
+        Email: {email_text}
     """
     response = client.models.generate_content(
         model="gemini-2.5-flash",
